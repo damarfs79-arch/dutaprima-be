@@ -16,7 +16,7 @@ class GalleryRequest extends FormRequest
         return [
             'title'    => 'required|string|max:255',
             'category' => 'required|string|max:100',
-            'image'    => $this->route('gallery') ? 'nullable|image|max:3072' : 'required|image|max:3072',
+            'image'    => $this->route('gallery') ? 'nullable|image|max:51200' : 'required|image|max:51200',
         ];
     }
 }

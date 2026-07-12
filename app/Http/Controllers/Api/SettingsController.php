@@ -86,4 +86,21 @@ class SettingsController extends Controller
 
         return response()->json($this->service->updateAngkatanSettings($data['angkatan_list']));
     }
+
+    // ==================== Voting ====================
+
+    public function votingSettings(): JsonResponse
+    {
+        return response()->json($this->service->getVotingSettings());
+    }
+
+    public function updateVotingSettings(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'end_time' => 'nullable|string',
+        ]);
+
+        return response()->json($this->service->updateVotingSettings($data));
+    }
+
 }

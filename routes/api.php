@@ -35,6 +35,9 @@ Route::put('/settings/marquee', [SettingsController::class, 'updateMarqueeSettin
 Route::get('/settings/angkatan', [SettingsController::class, 'angkatanSettings']);
 Route::put('/settings/angkatan', [SettingsController::class, 'updateAngkatanSettings']);
 
+Route::get('/settings/voting', [SettingsController::class, 'votingSettings']);
+Route::put('/settings/voting', [SettingsController::class, 'updateVotingSettings']);
+
 Route::post('/pendaftaran', [PendaftaranController::class, 'store']);
 Route::get('/pendaftaran', [PendaftaranController::class, 'index']);
 Route::get('/pendaftaran/unread-count', [PendaftaranController::class, 'unreadCount']); // HARUS di atas /{pendaftaran}

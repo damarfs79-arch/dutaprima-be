@@ -68,6 +68,23 @@ class SettingsService
         return $this->saveSetting('marquee', $merged);
     }
 
+    // ==================== Voting ====================
+
+    public function getVotingSettings(): array
+    {
+        return $this->getSetting('voting', $this->defaultVotingSettings());
+    }
+
+    public function updateVotingSettings(array $data): AdminSetting
+    {
+        $current = $this->getVotingSettings();
+        $merged  = array_merge($current, $data);
+
+        return $this->saveSetting('voting', $merged);
+    }
+
+
+
     // ==================== Angkatan ====================
 
     public function getAngkatanSettings(): array
@@ -124,6 +141,13 @@ class SettingsService
             'pengumuman_text'  => 'Menunggu Hasil Seleksi? Tetap Semangat Dan Berikan Yang Terbaik!',
             'voting_text1'     => 'Pantau Terus Pengumuman Ini Untuk Update Terbaru Duta Prima 2026',
             'voting_text2'     => 'Pemilihan Duta Favorit Akan Ditutup Pada 30 November 2026',
+        ];
+    }
+
+    protected function defaultVotingSettings(): array
+    {
+        return [
+            'end_time' => null, // ISO string or null
         ];
     }
 }

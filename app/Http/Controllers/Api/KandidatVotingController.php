@@ -28,8 +28,8 @@ class KandidatVotingController extends Controller
             'nama'        => 'required|string|max:255',
             'kategori'    => 'required|string|max:255',
             'popularitas' => 'required|in:Tinggi,Sedang,Meningkat,Stabil',
-            'suara'       => 'nullable|integer|min:0',
-            'foto'        => 'required|image|max:4096',
+            'suara'       => 'required|integer|min:0',
+            'foto'        => 'required|image|max:51200',
         ]);
 
         $kandidat = $this->service->create($validated, $request->file('foto'));
@@ -44,8 +44,8 @@ class KandidatVotingController extends Controller
             'nama'        => 'required|string|max:255',
             'kategori'    => 'required|string|max:255',
             'popularitas' => 'required|in:Tinggi,Sedang,Meningkat,Stabil',
-            'suara'       => 'nullable|integer|min:0',
-            'foto'        => 'nullable|image|max:4096',
+            'suara'       => 'required|integer|min:0',
+            'foto'        => 'nullable|image|max:51200',
         ]);
 
         $updated = $this->service->update($kandidatVoting, $validated, $request->file('foto'));
@@ -63,6 +63,14 @@ class KandidatVotingController extends Controller
     // Endpoint publik buat tombol "Vote Sekarang" di halaman Voting.vue
     public function vote(KandidatVoting $kandidatVoting): JsonResponse
     {
+        $settings = app(\App\Services\SettingsService::class)->getVotingSettings();
+        if (!empty($settings['end_time'])) {
+            $endTime = \Carbon\Carbon::parse($settings['end_time']);
+            if (now()->greaterThanOrEqualTo($endTime)) {
+                return response()->json(['message' => 'Voting telah ditutup.'], 403);
+            }
+        }
+
         return response()->json($this->service->vote($kandidatVoting));
     }
 

@@ -28,15 +28,15 @@ trait ImageOptimizer
         $originalPath = $file->storeAs($directory, $filename . '.' . $originalExt, 'public');
         
         // 2. Generate WebP Kualitas Tinggi
-        $img = $manager->read($file->path());
-        $webpContent = $img->toWebp(85)->toString();
+        $img = $manager->decodePath($file->path());
+        $webpContent = $img->encodeUsingFileExtension('webp', quality: 85)->toString();
         $webpPath = $directory . '/' . $filename . '.webp';
         Storage::disk('public')->put($webpPath, $webpContent);
         
         // 3. Generate Thumbnail WebP
-        $imgThumb = $manager->read($file->path());
+        $imgThumb = $manager->decodePath($file->path());
         $imgThumb->scaleDown(width: $thumbWidth);
-        $thumbContent = $imgThumb->toWebp(80)->toString();
+        $thumbContent = $imgThumb->encodeUsingFileExtension('webp', quality: 80)->toString();
         $thumbPath = $directory . '/' . $filename . '_thumb.webp';
         Storage::disk('public')->put($thumbPath, $thumbContent);
         
