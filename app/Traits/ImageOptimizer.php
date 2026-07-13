@@ -41,9 +41,9 @@ trait ImageOptimizer
         Storage::disk('public')->put($thumbPath, $thumbContent);
         
         return [
-            'original' => '/storage/' . $originalPath,
-            'webp'     => '/storage/' . $webpPath,
-            'thumb'    => '/storage/' . $thumbPath,
+            'original' => Storage::url($originalPath),
+            'webp'     => Storage::url($webpPath),
+            'thumb'    => Storage::url($thumbPath),
         ];
     }
 }
