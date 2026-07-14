@@ -41,7 +41,8 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
+            // Hostinger: storage:link tidak tersedia, akses langsung via /storage/app/public/
+            'url' => env('STORAGE_URL', rtrim(env('APP_URL', 'http://localhost'), '/').'/storage/app/public'),
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
